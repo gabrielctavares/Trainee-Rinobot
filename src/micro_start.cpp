@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "micro_start.h"
+#include "../include/micro_start.h"
 
 
 uStart::uStart(int signal_pin)
@@ -10,6 +10,5 @@ uStart::uStart(int signal_pin)
 
 void uStart::update()
 {
-    // Arduino::HIGH existe?
     this->state = (digitalRead(this->signal_pin) == 1 ) ? uStartState::START : uStartState::STOP;
 }

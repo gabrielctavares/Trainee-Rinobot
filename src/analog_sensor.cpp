@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "analog_sensor.h"
+#include "../include/analog_sensor.h"
 
 
 AnalogSensor::AnalogSensor(int pin)
