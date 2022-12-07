@@ -1,2 +1,2 @@
 #include <Arduino.h>
-#include "strategy.h"
+#include "../include/strategy.h"

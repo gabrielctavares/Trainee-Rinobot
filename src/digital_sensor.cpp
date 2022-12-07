@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "digital_sensor.h"
+#include "../include/digital_sensor.h"
 
 
 DigitalSensor::DigitalSensor(int pin)

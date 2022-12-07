@@ -13,6 +13,8 @@
 
 using namespace std;
 
+#define STDBY 5
+
 #define FRONT_SENSOR_PIN 26
 #define FULL_LEFT_SENSOR_PIN 25
 #define FULL_RIGHT_SENSOR_PIN 13
@@ -23,11 +25,14 @@ using namespace std;
 #define RIGHT_MOTOR_IN1_PIN 18
 #define RIGHT_MOTOR_IN2_PIN 19
 #define RIGHT_MOTOR_SPEED_CONST 1.0
+#define RIGHT_MOTOR_CHANNEL 0
+
 
 #define LEFT_MOTOR_PWM_PIN 4
 #define LEFT_MOTOR_IN1_PIN 17
 #define LEFT_MOTOR_IN2_PIN 16
 #define LEFT_MOTOR_SPEED_CONST 1.0
+#define LEFT_MOTOR_CHANNEL 1
 
 #define MICRO_START_SIGNAL_PIN 2
 
