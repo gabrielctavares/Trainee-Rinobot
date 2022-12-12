@@ -31,7 +31,9 @@ void Robot::update()
 {
     this->ustart.update();
     this->vision.updateEnemyPosition(this->front_sensor, this->full_left_sensor, this->full_right_sensor, this->left_sensor, this->right_sensor);
-    //this->auto_strategy.updateMotors(this->vision, this->left_motor, this->right_motor);
+
+    if(this->ustart.state == uStartState::START)
+        this->auto_strategy.updateMotors(this->vision, this->left_motor, this->right_motor);
 }
 
 
