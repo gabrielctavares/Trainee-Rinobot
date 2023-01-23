@@ -18,43 +18,49 @@ bool Move::update(MotorControl &left_motor, MotorControl &right_motor){
     delay(this->time_ms);
     left_motor.setPower(0);
     right_motor.setPower(0);    
-    this->finished = false;
+    this->finished = true;
     return true;
 }
 
 void AutoStrategy::updateMotors(Vision &vision, MotorControl &left_motor, MotorControl &right_motor){
     int left_power = 0;
     int right_power = 0;
-    int time_ms = 0;
 
     switch(vision.enemy_position) {
         case EnemyPosition::LEFT:        
             left_power = 40;
             right_power = 80;
-            time_ms = 1000;
             break;
         case EnemyPosition::RIGHT:        
             left_power = 80;
             right_power = 40;
-            time_ms = 1000;
             break;
         case EnemyPosition::FRONT:
             left_power = 100;
             right_power = 100;
-            time_ms = 1000;
             break;
         case EnemyPosition::FULL_LEFT:        
             left_power = 10;
             right_power = 80;
-            time_ms = 1000;
             break;
         case EnemyPosition::FULL_RIGHT:        
             left_power = 80;
             right_power = 10;
-            time_ms = 1000;
             break;
     } 
 
-    Move* move = new Move(left_power, right_power, time_ms);
-    move->update(left_motor, right_motor); 
+    left_motor.setPower(left_power);
+    right_motor.setPower(right_power);
+}
+
+InitialStrategy::InitialStrategy(std::list<Move> moves)
+{  
+    this->moves = moves;
+    this->strategy_finished = false;
+}
+bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor){
+    for(Move mov = this->moves.begin(); mov != this->moves.end(); ++mov){
+        this->current_move = *mov;
+        this->current_move->update(left_motor, right_motor);
+    }
 }
