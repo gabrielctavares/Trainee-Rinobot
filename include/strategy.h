@@ -23,7 +23,7 @@ class InitialStrategy
 {
 public:
     std::list<Move> moves;
-    Move &current_move;
+    Move *current_move;
     bool strategy_finished;
     bool update(MotorControl &left_motor, MotorControl &right_motor);
     InitialStrategy(std::list<Move> moves);

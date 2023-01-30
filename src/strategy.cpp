@@ -59,8 +59,8 @@ InitialStrategy::InitialStrategy(std::list<Move> moves)
     this->strategy_finished = false;
 }
 bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor){
-    for(Move mov = this->moves.begin(); mov != this->moves.end(); ++mov){
-        this->current_move = *mov;
+    for(Move x : moves){
+        this->current_move = &x;
         this->current_move->update(left_motor, right_motor);
     }
 }
