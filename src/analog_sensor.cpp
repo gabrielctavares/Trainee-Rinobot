@@ -22,5 +22,5 @@ int AnalogSensor::readSensor()
 
 int AnalogSensor::convertToCM()
 {       
-    return (this->raw_reading * COEFFICIENT_A) + COEFFICIENT_B;
+    return (MAX_RAW - this->raw_reading) * ANALOG_TO_CM;
 }

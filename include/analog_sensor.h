@@ -1,8 +1,8 @@
 #ifndef ANALOG_SENSOR_H
 #define ANALOG_SENSOR_H
 
-#define COEFFICIENT_A -0.004884004884
-#define COEFFICIENT_B 40;
+#define ANALOG_TO_CM  0.012837
+#define MAX_RAW  4095
 
 class AnalogSensor
 {
