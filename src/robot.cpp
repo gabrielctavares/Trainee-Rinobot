@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include "../include/robot.h"
 
-
-
 Robot::Robot()
 : ustart(MICRO_START_SIGNAL_PIN),
   front_sensor(FRONT_SENSOR_PIN),

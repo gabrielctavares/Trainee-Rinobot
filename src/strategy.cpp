@@ -1,19 +1,18 @@
 #include <Arduino.h>
 #include "../include/strategy.h"
-#include <sysinfoapi.h>
 
 
 Move::Move(int left_motor_power, int right_motor_power, int time_ms){
     this->left_motor_power = left_motor_power;
     this->right_motor_power = right_motor_power;
     this->time_ms = time_ms;
-    this->start_time_ms = GetTickCount64();
+    this->start_time_ms = millis();
     this->started = true;
     this->finished = false;    
 }
 
 bool Move::update(MotorControl &left_motor, MotorControl &right_motor){
-    int time_now = GetTickCount64();
+    int time_now = millis();
     
     if((time_now - this->start_time_ms) >= this->time_ms){
         left_motor.setPower(0);
