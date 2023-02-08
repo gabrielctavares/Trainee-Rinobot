@@ -1,25 +1,30 @@
 #include <Arduino.h>
 #include "../include/strategy.h"
+#include <sysinfoapi.h>
 
 
 Move::Move(int left_motor_power, int right_motor_power, int time_ms){
     this->left_motor_power = left_motor_power;
     this->right_motor_power = right_motor_power;
     this->time_ms = time_ms;
-    this->start_time_ms = 0;
-    this->started = false;
+    this->start_time_ms = GetTickCount64();
+    this->started = true;
     this->finished = false;    
 }
 
 bool Move::update(MotorControl &left_motor, MotorControl &right_motor){
-    this->started = true;
+    int time_now = GetTickCount64();
+    
+    if((time_now - this->start_time_ms) >= this->time_ms){
+        left_motor.setPower(0);
+        right_motor.setPower(0);    
+        this->finished = true;    
+        return true;
+    }
+
     left_motor.setPower(this->left_motor_power);
     right_motor.setPower(this->right_motor_power);
-    delay(this->time_ms);
-    left_motor.setPower(0);
-    right_motor.setPower(0);    
-    this->finished = true;
-    return true;
+    return false;
 }
 
 void AutoStrategy::updateMotors(Vision &vision, MotorControl &left_motor, MotorControl &right_motor){
@@ -53,14 +58,18 @@ void AutoStrategy::updateMotors(Vision &vision, MotorControl &left_motor, MotorC
     right_motor.setPower(right_power);
 }
 
-InitialStrategy::InitialStrategy(std::list<Move> moves)
+InitialStrategy::InitialStrategy(std::list<Move> moves): current_move(moves.front())
 {  
     this->moves = moves;
     this->strategy_finished = false;
 }
 bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor){
-    for(Move x : moves){
-        this->current_move = &x;
-        this->current_move->update(left_motor, right_motor);
+    this->current_move.update(left_motor, right_motor);
+    
+    if(this->current_move.finished){
+        this->moves.pop_front();
+        this->current_move = this->moves.front();
     }
+
+    this->strategy_finished = this->moves.empty();
 }

@@ -30,6 +30,11 @@ void Robot::readSensors()
 void Robot::update()
 {
     this->ustart.update();
+    this->front_sensor.readSensor();
+    this->full_left_sensor.readSensor();
+    this->full_right_sensor.readSensor();
+    this->left_sensor.readSensor();
+    this->right_sensor.readSensor();
     this->vision.updateEnemyPosition(this->front_sensor, this->full_left_sensor, this->full_right_sensor, this->left_sensor, this->right_sensor);
 
     if(this->ustart.state == uStartState::START)
