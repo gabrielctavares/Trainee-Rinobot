@@ -6,15 +6,18 @@ Move::Move(int left_motor_power, int right_motor_power, int time_ms){
     this->left_motor_power = left_motor_power;
     this->right_motor_power = right_motor_power;
     this->time_ms = time_ms;
-    this->start_time_ms = millis();
-    this->started = true;
+    this->start_time_ms = 0;
+    this->started = false;
     this->finished = false;    
 }
 
 bool Move::update(MotorControl &left_motor, MotorControl &right_motor){
-    int time_now = millis();
+    if(this->start_time_ms == 0) {
+        this->started = true;
+        this->start_time_ms = millis();
+    }
     
-    if((time_now - this->start_time_ms) >= this->time_ms){
+    if((millis() - this->start_time_ms) >= this->time_ms){
         left_motor.setPower(0);
         right_motor.setPower(0);    
         this->finished = true;    
@@ -67,8 +70,14 @@ bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor
     
     if(this->current_move.finished){
         this->moves.pop_front();
-        this->current_move = this->moves.front();
+
+        if(!this->moves.empty())
+            this->current_move = this->moves.front();
     }
 
     this->strategy_finished = this->moves.empty();
+}
+
+InitialStrategy* get_selected_strategy(int pinA, int pinB, int pinC){
+    return NULL;
 }

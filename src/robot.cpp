@@ -31,8 +31,22 @@ void Robot::update()
     this->readSensors();
     this->vision.updateEnemyPosition(this->front_sensor, this->full_left_sensor, this->full_right_sensor, this->left_sensor, this->right_sensor);
 
-    if(this->ustart.state == uStartState::START)
-        this->auto_strategy.updateMotors(this->vision, this->left_motor, this->right_motor);
+    if(this->ustart.state == uStartState::START){
+        this->initial_strategy = get_selected_strategy(STRATEGY_PIN_A, STRATEGY_PIN_B, STRATEGY_PIN_C);
+
+        if(this->robot_state == RobotState::INITIAL_STRATEGY){
+            this->initial_strategy->update(this->left_motor, this->right_motor);
+            
+            if(this->initial_strategy->strategy_finished)
+                this->robot_state == RobotState::AUTO_STRATEGY;
+        }            
+        else if (this->robot_state == RobotState::AUTO_STRATEGY)
+            this->auto_strategy.updateMotors(this->vision, this->left_motor, this->right_motor);
+    }
+    else{
+        // teoricamente aqui tem que parar o robô todo
+    }
+        
 }
 
 
