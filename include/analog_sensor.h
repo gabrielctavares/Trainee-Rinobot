@@ -1,7 +1,8 @@
 #ifndef ANALOG_SENSOR_H
 #define ANALOG_SENSOR_H
 
-#define ANALOG_TO_CM ((float)(20.0 / 2000.0))
+#define ANALOG_TO_CM  0.012837
+#define MAX_RAW  4095
 
 class AnalogSensor
 {
@@ -12,6 +13,7 @@ public:
     int pin;
     int readSensor();
     int filterSensor();
+    int convertToCM();
     AnalogSensor(int pin);
 };
 
