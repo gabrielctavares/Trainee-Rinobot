@@ -79,5 +79,67 @@ bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor
 }
 
 InitialStrategy* get_selected_strategy(int pinA, int pinB, int pinC){
-    return NULL; // TODO
+    int estrategia = (4 * pinA) + (2 * pinB) + pinC;
+    std::list<Move> moves;
+
+    switch(estrategia){
+        case 0:{
+            //Direita - Frente - Esquerda
+            moves.push_back(Move(80, 20, 1000));
+            moves.push_back(Move(80, 80, 1000));
+            moves.push_back(Move(20, 80, 1000));
+            break;  
+        }
+        case 1:{
+            //Esquerda - Frente - Direita
+            moves.push_back(Move(20, 80, 1000));
+            moves.push_back(Move(80, 80, 1000));
+            moves.push_back(Move(80, 20, 1000));
+            break;  
+        }
+        case 2:{
+            //Frente - Direita - Frente
+            moves.push_back(Move(100, 100, 1000));
+            moves.push_back(Move(80, 20, 1000));
+            moves.push_back(Move(100, 100, 1000));
+            break;  
+        }
+        case 3:{
+            //Frente - Esquerda - Frente
+            moves.push_back(Move(100, 100, 1000));
+            moves.push_back(Move(20, 80, 1000));
+            moves.push_back(Move(100, 100, 1000));
+            break;  
+        }
+        case 4:{
+            //Direita - Frente - Esquerda - FrenteFull
+            moves.push_back(Move(80, 20, 1000));
+            moves.push_back(Move(80, 80, 1000));
+            moves.push_back(Move(20, 80, 1000));
+            moves.push_back(Move(100, 100, 1000));
+            break;  
+        }
+        case 5:{
+            //Esquerda - Frente - Direita - FrenteFull
+            moves.push_back(Move(20, 80, 1000));
+            moves.push_back(Move(80, 80, 1000));
+            moves.push_back(Move(80, 20, 1000));
+            moves.push_back(Move(100, 100, 1000));
+            break;  
+        }
+        case 6:{
+            //Lesminha - direita - frente - esquerda
+            moves.push_back(Move(50, 10, 1500));
+            moves.push_back(Move(50, 50, 1500));
+            moves.push_back(Move(10, 50, 1500));
+            break;  
+        }
+        case 7:{
+            // Ao Infinito e além
+            moves.push_back(Move(100, 100, 4000));
+            break;  
+        }
+    }
+
+    return new InitialStrategy(moves); // TODO
 }
