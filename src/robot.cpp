@@ -44,7 +44,9 @@ void Robot::update()
             this->auto_strategy.updateMotors(this->vision, this->left_motor, this->right_motor);
     }
     else{
-        // teoricamente aqui tem que parar o robô todo
+        this->robot_state == RobotState::STOPPED;
+        this->left_motor->setPower(0);
+        this->right_motor->setPower(0);
     }
         
 }
