@@ -79,5 +79,5 @@ bool InitialStrategy::update(MotorControl &left_motor, MotorControl &right_motor
 }
 
 InitialStrategy* get_selected_strategy(int pinA, int pinB, int pinC){
-    return NULL;
+    return NULL; // TODO
 }
