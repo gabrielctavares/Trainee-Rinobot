@@ -12,9 +12,14 @@ MotorConfig::MotorConfig(int pwm_pin, int in1_pin, int in2_pin, float speed_cons
 MotorControl::MotorControl(int pwm_pin, int in1_pin, int in2_pin, float speed_const): config(pwm_pin, in1_pin, in2_pin, speed_const)
 {
     
+    
 }
 
 void MotorControl::setPower(int power)
-{
-    this->power = (power > this->max_power) ? this->max_power : power;
+{    
+    this->power = abs((abs(power) > abs(this->max_power)) ? this->max_power : power); 
+
+    digitalWrite(this->config.in1_pin, power >= 0);
+    digitalWrite(this->config.in2_pin, power < 0);
+    ledcWrite(this->config.pwm_pin, map(this->power, 0, 100, 0, 255));
 }
